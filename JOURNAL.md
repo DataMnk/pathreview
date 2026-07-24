@@ -36,3 +36,18 @@ agent/ area of the codebase, which interests me. I avoided #153 for a
 different reason: it had an unusually high number of claims and several
 already-open pull requests, and I wanted to reduce the temptation to
 reference existing solutions before reasoning through the bug myself.
+
+## Week 8 — Reproduction & solution planning
+
+
+
+**Reproduction summary:**
+I reproduced the bug locally using the Python REPL with the exact steps
+from the issue: `TechDetector().execute({'files': [...]})` with a file
+list containing `node_modules/lib/index.js` and `build/bundle.js` among
+Python files. The result's `primary_language` came back as `JavaScript`
+instead of the expected `Python`, confirming that `_should_skip_file()`
+fails to filter out these vendored/build paths because it checks for
+patterns with a leading slash (e.g. `"/node_modules/"`) that don't match
+paths without one (e.g. `"node_modules/lib/index.js"`).
+
