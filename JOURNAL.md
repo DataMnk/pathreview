@@ -39,7 +39,7 @@ reference existing solutions before reasoning through the bug myself.
 
 ## Week 8 — Reproduction & solution planning
 
-
+**Reproduction commit link:** https://github.com/DataMnk/pathreview/commit/939b152
 
 **Reproduction summary:**
 I reproduced the bug locally using the Python REPL with the exact steps
@@ -51,3 +51,10 @@ fails to filter out these vendored/build paths because it checks for
 patterns with a leading slash (e.g. `"/node_modules/"`) that don't match
 paths without one (e.g. `"node_modules/lib/index.js"`).
 
+**PLAN.md link:** https://github.com/DataMnk/pathreview/blob/fix/150-tech-detector-vendored-files/PLAN.md
+
+
+**Blockers or open questions:**
+None major yet. I still need to confirm whether file paths can ever arrive
+with backslashes instead of forward slashes on Windows, but I don't
+expect this to block the fix in Week 9.
