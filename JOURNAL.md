@@ -58,3 +58,29 @@ paths without one (e.g. `"node_modules/lib/index.js"`).
 None major yet. I still need to confirm whether file paths can ever arrive
 with backslashes instead of forward slashes on Windows, but I don't
 expect this to block the fix in Week 9.
+
+## Week 9 — Mid-week check-in
+
+**Date:** July 30, 2026
+
+**Progress:**
+Implemented the fix in `_should_skip_file()` (`agent/tools/tech_detector.py`,
+commit `499f202`): instead of substring-matching slash-anchored patterns like
+`"/node_modules/"`, the method now splits each filepath into path segments and
+checks whether any directory segment (excluding the filename) exactly matches
+a known vendor/build directory name. This correctly excludes paths with or
+without a leading slash, while avoiding false positives like
+`src/node_modules_helper.py`.
+
+**Verification so far:**
+- Both previously-failing tests now pass: `test_node_modules_excluded` and
+  `test_build_directory_excluded`
+- Full test suite for the file passes: 27/27 tests
+- Manually re-ran the original reproduction steps from the issue — confirmed
+  `primary_language` now returns `"Python"` instead of `"JavaScript"`
+- `ruff check agent/tools/tech_detector.py` passes with no errors
+
+**Remaining for this week:**
+- Write PR description following the project's contribution standards
+- Open the pull request
+- Final Week 9 check-in with PR link
