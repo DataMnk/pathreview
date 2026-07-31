@@ -148,21 +148,23 @@ class TechDetector(BaseTool):
         Returns:
             True if file should be skipped
         """
-        # BUG (issue #150): these patterns assume a leading "/", but paths like
-        # "node_modules/lib/index.js" (no leading slash) never match, so vendored
-        # files are counted toward primary_language detection.
-        # Reproduced: TechDetector().execute({'files': [...]}) with a path like
-        # 'node_modules/lib/index.js' returns primary_language='JavaScript'
-        # instead of the expected 'Python'.
-        skip_patterns = [
-            "/node_modules/",
-            "/vendor/",
-            "/dist/",
-            "/build/",
-            "/.git/",
-            "/__pycache__/",
-            "/.venv/",
-            "/venv/",
-        ]
-
-        return any(pattern in filepath for pattern in skip_patterns)
+        # Fix for issue #150: compare whole path segments instead of raw
+        # substrings, so vendored/build directories are excluded whether or
+        # not the path has a leading slash (e.g. both "node_modules/x.js" and
+        # "/node_modules/x.js" are skipped), while avoiding false positives
+        # like "src/node_modules_helper.py" (a filename that merely contains
+        # the substring, not a real directory segment).
+        skip_dirs = {
+            "node_modules",
+            "vendor",
+            "dist",
+            "build",
+            ".git",
+            "__pycache__",
+            ".venv",
+            "venv",
+        }
+        parts = filepath.replace("\\", "/").split("/")
+        # Exclude the last part (the filename itself) — only directory
+        # segments should trigger a skip.
+        return any(part in skip_dirs for part in parts[:-1])
