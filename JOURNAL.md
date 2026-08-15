@@ -100,10 +100,12 @@ Opened PR #804 against `ascherj/pathreview:main`, closing issue #150.
 - [x] The fix works — confirmed against the bug spec (reproduction steps
       from the issue now return `"Python"` instead of `"JavaScript"`)
 - [x] Existing tests still pass — full suite is 27/27
-- [x] New tests are written — the two previously-failing named tests pass,
-      but I have not yet added new regression tests for the edge cases
-      identified in PLAN.md (`src/node_modules_helper.py`, backslash paths,
-      `build/vendor.js`). **In progress — adding these now.**
+- [x] New tests are written — the two previously-failing named tests
+      (`test_node_modules_excluded`, `test_build_directory_excluded`) pass,
+      and I added three new regression tests covering the edge cases
+      identified in PLAN.md: a lookalike filename that should NOT be
+      excluded, a `build/vendor.js` path, and Windows backslash paths.
+      Full suite is now 30/30.
 - [x] The code follows codebase conventions — docstrings and comment style
       match the rest of `tech_detector.py`
 - [x] The linter passes — `ruff check agent/tools/tech_detector.py` is clean
@@ -123,3 +125,63 @@ Opened PR #804 against `ascherj/pathreview:main`, closing issue #150.
 
 **Blockers or open questions:**
 None blocking. Finishing edge-case test coverage before final resubmission.
+
+## Week 10 — Iteration & reflection
+
+### Reviewer feedback
+
+**Feedback received:** [ ] Yes  [x] No — still awaiting review
+
+**Summary of feedback:**
+No reviewer feedback has come in on PR #804. Per the course's Summer 2026
+note, reviewer feedback is not a feature this term, so this is expected.
+
+**How you responded:**
+N/A — no feedback to respond to.
+
+---
+
+### Reflection
+
+**What was harder than you expected?**
+Well, this is the first time that I work in a big collaborative project
+like this one. This semester was particularly challenging: the content,
+the rhythm, the length. From the beginning the technical part needed
+some extra work — I had to download and install Docker and prepare the
+environment, do some reading.
+
+**What did you learn about working in a large codebase?**
+It was a project that needed guidance; the class Q&A was very helpful.
+The fix itself was relatively simple — dividing some strings and doing
+some checkups — which alone would have been simple enough, however
+embedded in such a big project there is a lot of code reading that needs
+to be done before even touching anything. Then the testing part was fun,
+and being able to write new tests was also interesting. A great learning
+opportunity in general.
+
+**How did AI tools help — and where did they fall short?**
+Claude helped understanding the git collaboration process in general. It
+was necessary to stay in the loop and understand the codebase to be able
+to ask the right questions and not letting it deviate from the purpose
+or the goal, which was to actually learn how to participate and
+collaborate in GitHub effectively. For example: when the linter flagged
+181 errors across the whole repo, I couldn't just take Claude's word that
+they weren't mine — I had to actually check the output myself to confirm
+none of those errors were in my file before deciding `--no-verify` was
+the right call, backed by what Margaret had confirmed in class Q&A, not
+just Claude's suggestion.
+
+**What would you do differently if you started over?**
+I think overall it was a good experience — next time I'll know some
+things better. Given the knowledge and time I had, I think it was a good
+journey. I feel tempted to say "if I had more time..." but that doesn't
+happen in real life — time is always short, so it's important to learn
+to do everything consciously every time, or as much as possible.
+
+**What are you most proud of from this module?**
+I feel more proud of actually having pushed through until the end, of
+having persevered, because this semester was particularly difficult on
+so many levels. I'm glad it's over and I hope things get better over
+Fall. I'm proud that I managed to push through till the end. I almost
+missed these final reflection questions, but here I am. I think we
+learned a lot and it's all very relevant.
